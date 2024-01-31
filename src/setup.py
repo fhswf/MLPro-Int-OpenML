@@ -1,13 +1,13 @@
 from setuptools import setup
 
 
-setup(name='mypackage',
+setup(name='mlpro_int_openml',
 version='1.0.0',
-description='MLPro: Integration River',
+description='MLPro: Integration OpenML',
 author='MLPro Team',
 author_mail='mlpro@listen.fh-swf.de',
 license='Apache Software License (http://www.apache.org/licenses/LICENSE-2.0)',
-packages=['mypackage'],
+packages=['mlpro_int_openml'],
 
 # Package dependencies for full installation
 extras_require={
