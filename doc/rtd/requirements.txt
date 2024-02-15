@@ -1,3 +1,6 @@
+mlpro[full]
+openml
+
 sphinxcontrib-napoleon
 sphinx-copybutton
 sphinx_multitoc_numbering
