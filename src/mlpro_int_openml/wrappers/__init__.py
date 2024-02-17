@@ -1,1 +1,1 @@
-from mlpro_int_openml.wrappers.openml import *
+from mlpro_int_openml.wrappers.streams import *

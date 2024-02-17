@@ -1,7 +1,7 @@
 ## -------------------------------------------------------------------------------------------------
-## -- Project : MLPro - A Synoptic Framework for Standardized Machine Learning Tasks
-## -- Package : mlpro.wrappers
-## -- Module  : openml.py
+## -- Project : MLPro - The integrative middleware framework for standardized machine learning
+## -- Package : mlpro_int_openml.wrappers
+## -- Module  : streams.py
 ## -------------------------------------------------------------------------------------------------
 ## -- History :
 ## -- yyyy-mm-dd  Ver.      Auth.    Description
@@ -27,16 +27,16 @@
 ## --                                - changes due to stream options
 ## --                                - method _get_string(): new parameter p_name
 ## -- 2022-12-09  1.6.1     DA       Bugfix: features/labels need to be added under their full name
+## -- 2024-02-17  1.7.0     DA       Refactoring
 ## -------------------------------------------------------------------------------------------------
 
 """
-Ver. 1.6.1 (2022-12-09)
+Ver. 1.7.0 (2024-02-17)
 
 This module provides wrapper functionalities to incorporate public data sets of the OpenML ecosystem.
 
 Learn more: 
 https://www.openml.org/
-https://new.openml.org/
 https://docs.openml.org/APIs/
 
 """
@@ -67,15 +67,20 @@ class WrStreamProviderOpenML (Wrapper, StreamProvider):
 
     C_NAME              = 'OpenML'
     C_WRAPPED_PACKAGE   = 'openml'
+    C_MINIMUM_VERSION   = '0.14.2'
 
     C_SCIREF_TYPE       = ScientificObject.C_SCIREF_TYPE_ONLINE
     C_SCIREF_AUTHOR     = 'OpenML'
-    C_SCIREF_URL        = 'new.openml.org'
+    C_SCIREF_URL        = 'https://www.openml.org'
 
 ## -------------------------------------------------------------------------------------------------
     def __init__(self, p_logging = Log.C_LOG_ALL):
+
+        self.C_TYPE         = StreamProvider.C_TYPE
+
         Wrapper.__init__(self, p_logging = p_logging)
         StreamProvider.__init__(self, p_logging = p_logging)
+        
         self._stream_list   = []
         self._stream_ids    = []
         self._stream_names  = []
@@ -102,7 +107,8 @@ class WrStreamProviderOpenML (Wrapper, StreamProvider):
         """
 
         if len(self._stream_list) == 0:
-            list_datasets = openml.datasets.list_datasets(output_format='dict')
+            # list_datasets = openml.datasets.list_datasets(output_format='dict')
+            list_datasets = openml.datasets.list_datasets(output_format='dataframe')
 
 
             for d in list_datasets.items():
@@ -323,8 +329,8 @@ class WrStreamOpenML (Stream):
         except:
             self.C_SCIREF_ABSTRACT =''
 
-        self._dataset = self._stream_meta.get_data(dataset_format = 'array', **self._kwargs)
-
+        self._dataset = self._stream_meta.get_data(dataset_format = 'dataframe', **self._kwargs)
+ 
         if self._dataset is not None:
             return True
 

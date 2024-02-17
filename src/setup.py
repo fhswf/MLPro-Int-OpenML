@@ -1,8 +1,8 @@
 from setuptools import setup
 
 
-setup(name='mlpro_int_openml',
-version='1.0.0',
+setup(name='mlpro-int-openml',
+version='0.1.0',
 description='MLPro: Integration OpenML',
 author='MLPro Team',
 author_mail='mlpro@listen.fh-swf.de',
@@ -12,11 +12,8 @@ packages=['mlpro_int_openml'],
 # Package dependencies for full installation
 extras_require={
     "full": [
-        "dill",
-        "numpy",
-        "matplotlib",
-        "multiprocess",
-        "mlpro"
+        "mlpro[full]>=1.3.1",
+        "openml"
     ],
 },
 

@@ -12,9 +12,15 @@
 <img src="https://github.com/fhswf/MLPro-Int-OpenML/blob/main/doc/logo/original/logo.png?raw=True" align="right" width="40%"/>
 
 # MLPro-Int-OpenML - Integration of OpenML into MLPro
-Welcome to MLPro-Int-OpenML, an extension to MLPro to integrate the OpenML package. MLPro is a middleware framework for standardized machine learning in Python. It is developed by the South Westphalia University of Applied Sciences, Germany, and provides standards, templates, and processes for hybrid machine learning applications. OpenML, in turn, provides numerous datasets and benchmark functionalities to train and assess machine learning algorithms.
+Welcome to MLPro-Int-OpenML, an extension to MLPro to integrate the OpenML package.
+MLPro is a middleware framework for standardized machine learning in Python. It is 
+developed by the South Westphalia University of Applied Sciences, Germany, and provides 
+standards, templates, and processes for hybrid machine learning applications. OpenML, in turn, 
+provides a vast amount of sample datasets, combined with a benchmark systematics to
+enable a standardized assessment of ML algorithms.
 
-MLPro-Int-OpenML provides wrapper classes that enable the use of OpenML datasets in your MLPro applications. The use of these wrappers is illustrated in example programs.
+MLPro-Int-OpenML provides wrapper classes that enable the use of OpenML datasets in your 
+MLPro applications. The use of these wrappers is illustrated in example programs.
 
 ### Learn more
 [MLPro - Machine Learning Professional](https://mlpro.readthedocs.io)    
