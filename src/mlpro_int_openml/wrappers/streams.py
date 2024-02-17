@@ -107,8 +107,8 @@ class WrStreamProviderOpenML (Wrapper, StreamProvider):
         """
 
         if len(self._stream_list) == 0:
-            # list_datasets = openml.datasets.list_datasets(output_format='dict')
-            list_datasets = openml.datasets.list_datasets(output_format='dataframe')
+            list_datasets = openml.datasets.list_datasets(output_format='dict')
+            # list_datasets = openml.datasets.list_datasets(output_format='dataframe')
 
 
             for d in list_datasets.items():
@@ -329,7 +329,8 @@ class WrStreamOpenML (Stream):
         except:
             self.C_SCIREF_ABSTRACT =''
 
-        self._dataset = self._stream_meta.get_data(dataset_format = 'dataframe', **self._kwargs)
+        self._dataset = self._stream_meta.get_data(dataset_format = 'array', **self._kwargs)
+#        self._dataset = self._stream_meta.get_data(dataset_format = 'dataframe', **self._kwargs)
  
         if self._dataset is not None:
             return True
