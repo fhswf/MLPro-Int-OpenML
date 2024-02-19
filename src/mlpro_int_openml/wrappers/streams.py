@@ -28,10 +28,11 @@
 ## --                                - method _get_string(): new parameter p_name
 ## -- 2022-12-09  1.6.1     DA       Bugfix: features/labels need to be added under their full name
 ## -- 2024-02-17  1.7.0     DA       Refactoring
+## -- 2024-02-17  1.8.0     DA       Adaptation to new API >= v0.14.2
 ## -------------------------------------------------------------------------------------------------
 
 """
-Ver. 1.7.0 (2024-02-17)
+Ver. 1.8.0 (2024-02-19)
 
 This module provides wrapper functionalities to incorporate public data sets of the OpenML ecosystem.
 
@@ -41,12 +42,12 @@ https://docs.openml.org/APIs/
 
 """
 
-import numpy
 from mlpro.bf.various import ScientificObject, Log
 from mlpro.bf.ops import Mode
 from mlpro.wrappers.models import Wrapper
 from mlpro.bf.streams import Feature, Label, Instance, StreamProvider, Stream
 from mlpro.bf.math import Element, MSpace
+
 import openml
 
 
@@ -107,25 +108,23 @@ class WrStreamProviderOpenML (Wrapper, StreamProvider):
         """
 
         if len(self._stream_list) == 0:
-            list_datasets = openml.datasets.list_datasets(output_format='dict')
-            # list_datasets = openml.datasets.list_datasets(output_format='dataframe')
+            list_datasets = openml.datasets.list_datasets(output_format='dataframe')
 
-
-            for d in list_datasets.items():
+            for row_id, row_data in list_datasets.iterrows():
                 try:
-                    name = d[1]['name']
+                    name = row_data['name']
                 except:
                     name = ''
                 try:
-                    id = d[1]['did']
+                    id = row_data['did']
                 except:
                     id = ''
                 try:
-                    num_instances = d[1]['NumberOfInstances']
+                    num_instances = row_data['NumberOfInstances']
                 except:
                     num_instances = 0
                 try:
-                    version = d[1]['Version']
+                    version = row_data['Version']
                 except:
                     version = 0
 
@@ -266,7 +265,9 @@ class WrStreamOpenML (Stream):
         self.get_feature_space()
         self.get_label_space()
 
-        self._index = 0
+        self._index          = 0
+        self._iterator_data  = self._dataset[0].iterrows()
+        self._iterator_label = iter(self._dataset[1])
 
 
 ## --------------------------------------------------------------------------------------------------
@@ -307,7 +308,10 @@ class WrStreamOpenML (Stream):
             True for the download status of the stream
         """
 
-        self._stream_meta = openml.datasets.get_dataset(self._id)
+        self._stream_meta = openml.datasets.get_dataset( dataset_id=self._id, 
+                                                         download_data=True,
+                                                         download_qualities=True,
+                                                        download_features_meta_data=True )
         try:
             self._label = str(self._kwargs['target']).lstrip()
             self._kwargs['target'] = self._label
@@ -329,8 +333,7 @@ class WrStreamOpenML (Stream):
         except:
             self.C_SCIREF_ABSTRACT =''
 
-        self._dataset = self._stream_meta.get_data(dataset_format = 'array', **self._kwargs)
-#        self._dataset = self._stream_meta.get_data(dataset_format = 'dataframe', **self._kwargs)
+        self._dataset = self._stream_meta.get_data(dataset_format = 'dataframe', **self._kwargs)
  
         if self._dataset is not None:
             return True
@@ -350,18 +353,20 @@ class WrStreamOpenML (Stream):
             Next instance in the OpenML stream object (None after the last instance in the dataset).
         """
 
-        # 1 Check: end of data stream reached?
-        if self._index >= len(self._dataset[0]): raise StopIteration
-
-        # 2 Determine feature data
+        # 1 Determine feature data
         feature_data  = Element( self.get_feature_space() )
-        feature_data.set_values(self._dataset[0][self._index])
 
-        # 3 Determine label data
+        row = next(self._iterator_data)
+        row_values = row[1].to_list()
+        feature_data.set_values(p_values=row_values)
+
+
+        # 2 Determine label data
         label_space = self.get_label_space()
         if label_space is not None:
             label_data = Element(self.get_label_space())
-            label_data.set_values(numpy.asarray([self._dataset[1][self._index]]))
+            label_values = next(self._iterator_label)
+            label_data.set_values([label_values])
         else:
             label_data = None
 

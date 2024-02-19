@@ -44,10 +44,12 @@ from mlpro_int_openml.wrappers import WrStreamProviderOpenML
 # 0 Prepare Demo/Unit test mode
 if __name__ == '__main__':
     num_inst    = 10
+    inst_max    = 100000
     logging     = Log.C_LOG_ALL
 else:
     print('\n', datetime.now(), __file__)
     num_inst    = 2
+    inst_max    = 10
     logging     = Log.C_LOG_NOTHING
 
 
@@ -90,25 +92,22 @@ for i in range(num_inst):
 
 # 8 Resetting the iterator
 myiterator = iter(mystream)
+num_inst_dark = min(myiterator.get_num_instances(), inst_max)
 
 
-# 9 Fetching all 1,000 instances
-myiterator.log(mystream.C_LOG_TYPE_W,'Fetching all', myiterator.get_num_instances(), 'instances...')
+# 9 Fetching all instances dark
+myiterator.log(mystream.C_LOG_TYPE_W,'Fetching', num_inst_dark, 'instances...')
+tp_start = datetime.now()
 for i, curr_instance in enumerate(myiterator):
-    if i == num_inst: 
-        myiterator.log(Log.C_LOG_TYPE_W, 'Rest of the', myiterator.get_num_instances(), 'instances dark...')
-        myiterator.switch_logging(p_logging=Log.C_LOG_NOTHING)
-        tp_start = datetime.now()
-
     curr_data       = curr_instance.get_feature_data().get_values()
     curr_label      = curr_instance.get_label_data().get_values()
-    myiterator.log(mystream.C_LOG_TYPE_I, 'Instance', str(i) + ': \n   Data:', curr_data[0:14], '...\n   Label:', curr_label)
+    if i == num_inst_dark: break
 
 # 9.1 Some statistics...
 tp_end = datetime.now()
 duration = tp_end - tp_start
 duration_sec = ( duration.seconds * 1000000 + duration.microseconds + 1 ) / 1000000
-rate = ( myiterator.get_num_instances() - num_inst ) / duration_sec
+rate = num_inst_dark / duration_sec
 
 myiterator.switch_logging(p_logging=logging)
 myiterator.log(Log.C_LOG_TYPE_W, 'Done in', round(duration_sec,3), ' seconds (throughput =', round(rate), 'instances/sec)')    
