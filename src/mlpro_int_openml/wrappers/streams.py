@@ -28,7 +28,7 @@
 ## --                                - method _get_string(): new parameter p_name
 ## -- 2022-12-09  1.6.1     DA       Bugfix: features/labels need to be added under their full name
 ## -- 2024-02-17  1.7.0     DA       Refactoring
-## -- 2024-02-17  1.8.0     DA       Adaptation to new API >= v0.14.2
+## -- 2024-02-19  1.8.0     DA       Adaptation to new API >= v0.14.2
 ## -------------------------------------------------------------------------------------------------
 
 """
@@ -37,7 +37,7 @@ Ver. 1.8.0 (2024-02-19)
 This module provides wrapper functionalities to incorporate public data sets of the OpenML ecosystem.
 
 Learn more: 
-https://www.openml.org/
+
 https://docs.openml.org/APIs/
 
 """

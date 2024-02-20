@@ -1,12 +1,12 @@
 .. _api_streams:
-Wrappers for scikit-learn Data Streams
-======================================
+Wrappers for OpenML Data Streams
+================================
 
-.. image:: images/MLPro-Int-scikit-learn-Streams.drawio.png
-   :scale: 50%
+.. .. image:: images/MLPro-Int-scikit-learn-Streams.drawio.png
+..    :scale: 50%
 
 
-.. automodule:: mlpro_int_sklearn.wrappers.streams
+.. automodule:: mlpro_int_openml.wrappers.streams
     :members:
     :undoc-members:
     :private-members:

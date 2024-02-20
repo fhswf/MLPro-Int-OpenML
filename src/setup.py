@@ -13,7 +13,7 @@ packages=['mlpro_int_openml'],
 extras_require={
     "full": [
         "mlpro[full]>=1.3.1",
-        "openml"
+        "openml>=0.14.2"
     ],
 },
 

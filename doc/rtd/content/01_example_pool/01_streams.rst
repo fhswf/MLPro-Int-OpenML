@@ -1,6 +1,6 @@
 .. _howtos_streams:
-Reuse of scikit-learn Data Streams
-==================================
+Reuse of OpenML Datasets as Streams
+===================================
 
 .. toctree::
    :maxdepth: 1

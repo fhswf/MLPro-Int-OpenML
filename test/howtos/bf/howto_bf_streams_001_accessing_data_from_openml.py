@@ -15,10 +15,11 @@
 ## -- 2022-11-08  1.1.1     DA       Minor improvements
 ## -- 2022-11-11  1.1.2     LSB      Refactoring for the new set options method
 ## -- 2023-02-02  1.1.3     DA       Bugfix in time measurement
+## -- 2024-02-19  1.2.0     DA       Minor parameter adjustments
 ## -------------------------------------------------------------------------------------------------
 
 """
-Ver. 1.1.3 (2023-02-02)
+Ver. 1.2.0 (2024-02-19)
 
 This module demonstrates the use of OpenML datasets as streams in MLPro. To this regard, MLPro
 provides wrapper classes to standardize stream access in own ML applications.
