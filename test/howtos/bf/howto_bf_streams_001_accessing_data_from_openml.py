@@ -37,7 +37,7 @@ You will learn:
 
 from datetime import datetime
 from mlpro.bf.various import Log
-from mlpro_int_openml.wrappers import WrStreamProviderOpenML
+from mlpro_int_openml import WrStreamProviderOpenML
 
 
 

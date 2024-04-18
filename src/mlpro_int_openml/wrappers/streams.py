@@ -29,10 +29,11 @@
 ## -- 2022-12-09  1.6.1     DA       Bugfix: features/labels need to be added under their full name
 ## -- 2024-02-17  1.7.0     DA       Refactoring
 ## -- 2024-02-19  1.8.0     DA       Adaptation to new API >= v0.14.2
+## -- 2024-04-18  1.9.0     DA       Alignment with MLPro 1.4.0
 ## -------------------------------------------------------------------------------------------------
 
 """
-Ver. 1.8.0 (2024-02-19)
+Ver. 1.9.0 (2024-04-18)
 
 This module provides wrapper functionalities to incorporate public data sets of the OpenML ecosystem.
 
@@ -44,7 +45,7 @@ https://docs.openml.org/APIs/
 
 from mlpro.bf.various import ScientificObject, Log
 from mlpro.bf.ops import Mode
-from mlpro.wrappers.models import Wrapper
+from mlpro.wrappers import Wrapper
 from mlpro.bf.streams import Feature, Label, Instance, StreamProvider, Stream
 from mlpro.bf.math import Element, MSpace
 
