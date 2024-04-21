@@ -17,11 +17,12 @@ MLPro-Int-OpenML provides wrapper classes that enable the use of OpenML datasets
 MLPro applications. The use of these wrappers is illustrated in example programs.
 
 **Preparation**
-   Before running the examples, please install the latest versions of MLPro, OpenML, and MLPro-Int-OpenML as follows:
 
-   .. code-block:: bash
+Before running the examples, please install the latest versions of MLPro, OpenML, and MLPro-Int-OpenML as follows:
 
-      pip install mlpro-int-openml[full] --upgrade
+.. code-block:: bash
+
+   pip install mlpro-int-openml[full] --upgrade
 
 
 **See also**
