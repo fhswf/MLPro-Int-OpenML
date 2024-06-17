@@ -6,7 +6,7 @@
 MLPro-Int-OpenML - Integration of OpenML into MLPro
 ===================================================
 
-Welcome to MLPro-Int-OpenML, an extension to MLPro to integrate the OpenML package.
+Welcome to MLPro-Int-OpenML, an extension to MLPro to integrate the scientific data provider OpenML.
 MLPro is a middleware framework for standardized machine learning in Python. It is 
 developed by the South Westphalia University of Applied Sciences, Germany, and provides 
 standards, templates, and processes for hybrid machine learning applications. OpenML, in turn, 
