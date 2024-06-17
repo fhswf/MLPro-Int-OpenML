@@ -12,7 +12,7 @@
 <img src="https://github.com/fhswf/MLPro-Int-OpenML/blob/main/doc/logo/original/logo.png?raw=True" align="right" width="40%"/>
 
 # MLPro-Int-OpenML - Integration of OpenML into MLPro
-Welcome to MLPro-Int-OpenML, an extension to MLPro to integrate the OpenML data provider.
+Welcome to MLPro-Int-OpenML, an extension to MLPro to integrate the scientific data provider OpenML.
 MLPro is a middleware framework for standardized machine learning in Python. It is 
 developed by the South Westphalia University of Applied Sciences, Germany, and provides 
 standards, templates, and processes for hybrid machine learning applications. OpenML, in turn, 
