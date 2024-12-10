@@ -1,13 +1,12 @@
 ## -------------------------------------------------------------------------------------------------
-## -- Project   : MLPro - The integrative middleware framework for standardized machine learning
-## -- Extension : MLPro-Int-River - Integration of River into MLPro
-## -- Workflow  : pypi_deploy.yml
+## -- Project : MLPro - The integrative middleware framework for standardized machine learning
+## -- Workflow: pypi_deploy.yml
 ## -------------------------------------------------------------------------------------------------
 ## -- History :
 ## -- yyyy-mm-dd  Ver.      Auth.    Description
-## -- 2024        1.0.0     MRD      Creation 
-## -- 2024-12-03  1.1.0     DA       Updated the version for Python to 3.10
-## -- 2024-12-10  1.2.0     DA       Update actions/checkout to v4
+## -- 2024        1.0.0     DA       Creation 
+## -- 2024-11-29  1.1.0     DA       Updated the version for Python to 3.10
+## -- 2024-12-10  1.2.0     DA       Update actions/checkout to v4, actions/setup-python to v5
 ## -------------------------------------------------------------------------------------------------
 
 name: Deployment PyPI
@@ -16,7 +15,7 @@ on:
   release:
     types: [published]
 
-  workflow_dispatch:  
+  workflow_dispatch:    
 
 jobs:
   build:
