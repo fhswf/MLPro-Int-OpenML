@@ -23,6 +23,6 @@ MLPro-Int-OpenML provides wrapper classes that enable the use of OpenML datasets
 MLPro applications. The use of these wrappers is illustrated in example programs.
 
 ### Learn more
-[MLPro - Machine Learning Professional](https://mlpro.readthedocs.io)    
+[MLPro - The integrative middleware framework for standardized machine learning in Python](https://mlpro.readthedocs.io)   
 [MLPro-Int-OpenML - Integration of OpenML into MLPro](https://mlpro-int-openml.readthedocs.io)   
 [OpenML - A worldwide machine learning lab](https://www.openml.org/)   
