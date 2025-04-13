@@ -1,2 +1,2 @@
-mlpro[full]>=1.4.0
-openml>=0.14.2
+mlpro[full]>=1.9.8
+openml>=0.15.1

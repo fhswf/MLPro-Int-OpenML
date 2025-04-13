@@ -7,6 +7,7 @@
 --->
 [![PyPI Total Downloads](https://static.pepy.tech/personalized-badge/mlpro-int-openml?period=total&units=international_system&left_color=blue&right_color=orange&left_text=PyPI%20Total%20Downloads)](https://pepy.tech/project/mlpro-int-openml)
 [![PyPI Last Month Downloads](https://static.pepy.tech/personalized-badge/mlpro-int-openml?period=month&units=international_system&left_color=blue&right_color=orange&left_text=PyPI%20Last%20Month%20Downloads)](https://pepy.tech/project/mlpro-int-openml)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15206724.svg)](https://doi.org/10.5281/zenodo.15206724)
 
 
 <img src="https://github.com/fhswf/MLPro-Int-OpenML/blob/main/doc/logo/original/logo.png?raw=True" align="right" width="40%"/>
