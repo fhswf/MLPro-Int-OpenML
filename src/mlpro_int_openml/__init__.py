@@ -1,1 +1,1 @@
-from mlpro_int_openml.wrappers import *
+from .wrappers import *

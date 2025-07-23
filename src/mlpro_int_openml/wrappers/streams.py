@@ -30,10 +30,11 @@
 ## -- 2024-02-17  1.7.0     DA       Refactoring
 ## -- 2024-02-19  1.8.0     DA       Adaptation to new API >= v0.14.2
 ## -- 2024-04-18  1.9.0     DA       Alignment with MLPro 1.4.0
+## -- 2025-07-23  2.0.0     DA       Refactoring 
 ## -------------------------------------------------------------------------------------------------
 
 """
-Ver. 1.9.0 (2024-04-18)
+Ver. 2.0.0 (2025-07-23)
 
 This module provides wrapper functionalities to incorporate public data sets of the OpenML ecosystem.
 
@@ -51,6 +52,11 @@ from mlpro.bf.math import Element, MSpace
 
 import openml
 
+
+
+# Export list for public API
+__all__ = [ 'WrStreamProviderOpenML', 
+            'WrStreamOpenML' ]
 
 
 
