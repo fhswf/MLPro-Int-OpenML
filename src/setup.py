@@ -2,7 +2,7 @@ from setuptools import setup
 
 
 setup(name='mlpro-int-openml',
-version='1.0.2',
+version='1.1.0',
 description='MLPro: Integration OpenML',
 author='MLPro Team',
 author_mail='mlpro@listen.fh-swf.de',
@@ -12,7 +12,7 @@ packages=['mlpro_int_openml'],
 # Package dependencies for full installation
 extras_require={
     "full": [
-        "mlpro[full]>=1.9.8",
+        "mlpro[full]>=2.1.0",
         "openml>=0.15.1"
     ],
 },
