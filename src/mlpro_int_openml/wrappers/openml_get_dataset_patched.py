@@ -1,73 +1,57 @@
-import os
 import httpx
+import os
+import sys
 
-
-def _get_file_info(dataset_id: int):
+def get_dataset_patched(dataset_id, download_dir="./downloads", timeout=10):
     """
-    Versucht aus der OpenML-JSON-API die file_id + filename zu holen.
-    Falls nicht vorhanden, nutzt er den 'url'-Fallback.
+    Einfacher OpenML-Dataset-Downloader ohne Range-Requests.
+    Holt Metadaten über die API und lädt die Datei in einem Rutsch.
     """
-    api_url = f"https://www.openml.org/api/v1/json/data/{dataset_id}"
-    try:
-        with httpx.Client(timeout=30.0, verify=False) as client:  # verify=True wenn möglich
-            r = client.get(api_url)
-            r.raise_for_status()
-            data = r.json()
-    except Exception as e:
-        raise RuntimeError(f"Fehler beim Abrufen der Metadaten von {api_url}: {e}")
 
-    desc = data.get("data_set_description", {})
-    file_id = desc.get("file_id")
-    filename = desc.get("file")
-    url = desc.get("url")
-
-    if file_id and filename:
-        return file_id, filename, None
-    elif url:
-        return None, None, url
-    else:
-        raise ValueError(
-            f"Dataset {dataset_id} hat weder file_id noch file noch url – möglicherweise nicht mehr verfügbar."
-        )
-
-
-def get_dataset_patched(dataset_id: int, download_dir: str = "./downloads"):
-    """
-    Lädt ein Dataset von OpenML herunter (mit robustem Fallback, falls file_id fehlt).
-    Gibt den lokalen Dateipfad zurück.
-    """
+    base_meta_url = f"https://api.openml.org/v1/json/data/{dataset_id}"
     print(f"Fetching metadata for dataset {dataset_id}...")
-    file_id, filename, direct_url = _get_file_info(dataset_id)
 
-    if direct_url:
-        download_url = direct_url
-    else:
-        download_url = f"https://www.openml.org/data/download/{file_id}/{filename}"
-
-    # Zielverzeichnis vorbereiten
-    os.makedirs(download_dir, exist_ok=True)
-    local_filename = os.path.join(download_dir, filename if filename else os.path.basename(download_url))
-
-    print(f"Downloading dataset {dataset_id} from {download_url}...")
     try:
-        with httpx.stream("GET", download_url, timeout=60.0, verify=False) as r:
-            if r.status_code == 404:
-                raise FileNotFoundError(f"Dataset-Datei unter {download_url} nicht gefunden (404).")
-            r.raise_for_status()
-            with open(local_filename, "wb") as f:
-                for chunk in r.iter_bytes():
-                    f.write(chunk)
+        with httpx.Client(timeout=timeout) as client:
+            meta_resp = client.get(base_meta_url)
+            meta_resp.raise_for_status()
+            meta_json = meta_resp.json()
     except Exception as e:
-        raise RuntimeError(f"Fehler beim Download von {download_url}: {e}")
+        print(f"❌ Fehler beim Abrufen der Metadaten: {e}")
+        sys.exit(1)
 
-    print(f"Dataset gespeichert unter: {local_filename}")
-    return local_filename
+    # File-ID und Name ermitteln
+    try:
+        file_id = meta_json['data_set_description']['file_id']
+        file_name = meta_json['data_set_description']['file_id'] + ".arff"
+    except KeyError:
+        print(f"❌ Metadaten enthalten keine gültigen Dateiinfos für Dataset {dataset_id}")
+        sys.exit(1)
+
+    # Download-URL
+    url = f"https://api.openml.org/data/v1/download/{file_id}/{file_name}"
+    print(f"Downloading dataset {dataset_id} from {url}...")
+
+    os.makedirs(download_dir, exist_ok=True)
+    file_path = os.path.join(download_dir, file_name)
+
+    try:
+        with httpx.Client(timeout=timeout) as client:
+            r = client.get(url)
+            if r.status_code == 404:
+                print(f"❌ Datei nicht gefunden (404): {url}")
+                sys.exit(1)
+            r.raise_for_status()
+            with open(file_path, "wb") as f:
+                f.write(r.content)
+    except Exception as e:
+        print(f"❌ Fehler beim Download: {e}")
+        sys.exit(1)
+
+    print(f"✅ Dataset {dataset_id} gespeichert unter: {file_path}")
+    return file_path
 
 
 if __name__ == "__main__":
     # Beispielaufruf
-    try:
-        ds_path = get_dataset_patched(1477, download_dir="./downloads")
-        print(f"✅ Download abgeschlossen: {ds_path}")
-    except Exception as e:
-        print(f"❌ Fehler: {e}")
+    get_dataset_patched(1477, download_dir="./downloads")
