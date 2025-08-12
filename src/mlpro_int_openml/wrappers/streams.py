@@ -44,6 +44,7 @@ https://docs.openml.org/APIs/
 
 """
 
+from sympy import true
 from mlpro.bf.various import ScientificObject, Log
 from mlpro.bf.ops import Mode
 from mlpro.wrappers import Wrapper
@@ -52,6 +53,7 @@ from mlpro.bf.math import Element, MSpace
 
 import openml
 
+from mlpro_int_openml.wrappers.openml_get_dataset_patched import get_dataset_patched
 
 
 # Export list for public API
@@ -315,10 +317,16 @@ class WrStreamOpenML (Stream):
             True for the download status of the stream
         """
 
-        self._stream_meta = openml.datasets.get_dataset( dataset_id=self._id, 
-                                                         download_data=True,
-                                                         download_qualities=True,
-                                                        download_features_meta_data=True )
+        import os
+        os.environ["OPENML_PARQUET_TRUST_ENV"] = "false"  # Proxy-ENV ignorieren
+        os.environ["OPENML_IPV4_ONLY"] = "true"           # IPv4 erzwingen
+        os.environ["OPENML_DL_READ_TIMEOUT"] = "300"      # Read-Timeout erhöhen
+
+#        self._stream_meta = openml.datasets.get_dataset( dataset_id=self._id, 
+        self._stream_meta = get_dataset_patched( dataset_id=self._id, 
+                                                 download_data=True,
+                                                 download_qualities=True,
+                                                 download_features_meta_data=True )
         try:
             self._label = str(self._kwargs['target']).lstrip()
             self._kwargs['target'] = self._label
