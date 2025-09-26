@@ -31,10 +31,13 @@
 ## -- 2024-02-19  1.8.0     DA       Adaptation to new API >= v0.14.2
 ## -- 2024-04-18  1.9.0     DA       Alignment with MLPro 1.4.0
 ## -- 2025-07-23  2.0.0     DA       Refactoring 
+## -- 2025-09-26  2.0.1     DA       Bugfix: MSpace instead of ESpace in methods
+## --                                WrStreamOpenML._setup_feature_space() and
+## --                                WrStreamOpenML._setup_label_space()
 ## -------------------------------------------------------------------------------------------------
 
 """
-Ver. 2.0.0 (2025-07-23)
+Ver. 2.0.1 (2025-09-26)
 
 This module provides wrapper functionalities to incorporate public data sets of the OpenML ecosystem.
 
@@ -49,7 +52,7 @@ from mlpro.bf.various import ScientificObject, Log
 from mlpro.bf.ops import Mode
 from mlpro.wrappers import Wrapper
 from mlpro.bf.streams import Feature, Label, Instance, StreamProvider, Stream
-from mlpro.bf.math import Element, MSpace
+from mlpro.bf.math import Element, MSpace, ESpace
 
 import openml
 
@@ -285,7 +288,7 @@ class WrStreamOpenML (Stream):
             self._downloaded = self._download()
             if not self._downloaded: return None       
 
-        feature_space = MSpace()
+        feature_space = ESpace()
 
         _, _, _, features = self._dataset
         for feature in features:
@@ -301,7 +304,7 @@ class WrStreamOpenML (Stream):
             if ( not self._downloaded ) or ( self._label == '' ):
                 return None       
 
-        label_space = MSpace()
+        label_space = ESpace()
         label_space.add_dim(Label(p_name_short=str(self._label), p_name_long=str(self._label)))
         return label_space
 
